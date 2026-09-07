@@ -20,9 +20,9 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'num_control' => 'required|string|max:10|unique:alumno,num_control',
+            'num_control' => 'required|string|max:10|unique:alumnos,num_control',
             'nombre' => 'required|string|max:250',
-            'correo_institucional' => 'required|string|email|max:200|unique:alumno,correo_institucional',
+            'correo_institucional' => 'required|string|email|max:200|unique:alumnos,correo_institucional',
             'id_grupo' => 'nullable|exists:grupo,id_grupo'
         ]);
 

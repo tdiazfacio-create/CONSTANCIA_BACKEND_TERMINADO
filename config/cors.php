@@ -8,6 +8,7 @@ return [
 
     'allowed_origins' => [
         'http://localhost:4200',
+        'http://192.168.0.145:4200',
         'https://asistencias-itsal.netlify.app',
     ],
 

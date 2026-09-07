@@ -47,7 +47,7 @@ class AsistenciaController extends Controller
         if ($user->id_rol == 1) {
 
         } else if ($user->id_rol == 2 && $user->docente) {
-            if ($user->docente->id_grupo != $validated['id_grupo']) {
+           if (!$user->docente->grupo || $user->docente->grupo->id_grupo != $validated['id_grupo']) {
                 return response()->json(['message' => 'No tienes permiso para registrar asistencia en este grupo.'], 403);
             }
         } else {
@@ -102,12 +102,15 @@ class AsistenciaController extends Controller
 
             if (!$alumno) {
 
-            } else if ($docente->id_grupo != $alumno->id_grupo) {
-                return response()->json([
-                    'message' => "No tienes permiso. Tu Grupo es: " . $docente->id_grupo . " y el Alumno es del Grupo: " . $alumno->id_grupo
-                ], 403);
+            } else if (!$docente->grupo || $docente->grupo->id_grupo != $alumno->id_grupo) {
+    return response()->json([
+        'message' => "No tienes permiso. Tu Grupo es: " .
+            ($docente->grupo->id_grupo ?? 'Sin grupo') .
+            " y el Alumno es del Grupo: " . $alumno->id_grupo
+    ], 403);
+}
             }
-        } 
+        
         else {
             return response()->json(['message' => 'No autorizado.'], 403);
         }
