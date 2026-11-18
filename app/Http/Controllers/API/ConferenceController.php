@@ -74,6 +74,46 @@ class ConferenceController extends Controller
             'nombre' => $conferencia->nombre_conferencia
         ]);
     } 
+    public function update(Request $request, Conferencia $conferencia)
+{
+    try {
+        $validatedData = $request->validate([
+            'nombre_conferencia' => 'required|string|max:200',
+            'tema' => 'nullable|string|max:255',
+            'fecha_hora' => 'required|date',
+            'lugar' => 'required|string|max:150',
+            'num_participantes' => 'nullable|integer',
+            'id_ponente' => 'nullable|exists:ponente,id_ponente',
+            'grupos' => 'required|array',
+            'grupos.*' => 'integer|exists:grupo,id_grupo',
+        ]);
+
+        $grupos = $validatedData['grupos'];
+        unset($validatedData['grupos']);
+
+        $conferencia->update($validatedData);
+
+        $conferencia->grupos()->sync($grupos);
+
+        ActivityLog::create([
+            'tipo_accion' => 'conferencia',
+            'descripcion' => 'La conferencia "' . $conferencia->nombre_conferencia . '" ha sido actualizada.'
+        ]);
+
+        return response()->json(
+            $conferencia->load(['ponente', 'grupos', 'periodo']),
+            200
+        );
+
+    } catch (\Exception $e) {
+        Log::error("Error actualizando conferencia: " . $e->getMessage());
+
+        return response()->json([
+            'message' => 'Error interno al actualizar la conferencia.',
+            'details' => $e->getMessage()
+        ], 500);
+    }
+}
 
     public function destroy(Conferencia $conferencia)
     {
@@ -94,6 +134,7 @@ class ConferenceController extends Controller
             Conferencia::where('periodo_id', $periodo_id)->update(['esta_archivado' => true]);
             $conferenciasIds = Conferencia::where('periodo_id', $periodo_id)->pluck('id_conferencia');
             \App\Models\Asistencia::whereIn('id_conferencia', $conferenciasIds)->update(['esta_archivado' => true]);
+            \App\Models\PeriodoAcademico::where('id', $periodo_id)->update(['activo' => false]);
             return response()->json(['message' => 'Periodo archivado correctamente.']);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error al archivar periodo.', 'details' => $e->getMessage()], 500);

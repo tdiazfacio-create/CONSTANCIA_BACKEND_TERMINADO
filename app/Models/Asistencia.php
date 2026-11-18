@@ -14,21 +14,26 @@ class Asistencia extends Model
 
     public $timestamps = true; 
 
-    protected $fillable = [
-        'id_conferencia',
-        'num_control',
-        'fecha_registro',      
-        'verification_token',
-        'token_expires_at',
-        'status',
-        'esta_archivado' 
-    ];
+protected $fillable = [
+    'id_conferencia',
+    'num_control',
+    'fecha_registro',
+    'fecha_salida',
+    'verification_token',
+    'token_expires_at',
+    'status',
+    'esta_archivado'
+];
 
-    protected $casts = [
-        'token_expires_at' => 'datetime',
-        'fecha_registro' => 'datetime',
-        'esta_archivado' => 'boolean' 
-    ];
+
+    
+protected $casts = [
+    'token_expires_at' => 'datetime',
+    'fecha_registro' => 'datetime',
+    'fecha_salida' => 'datetime',
+    'esta_archivado' => 'boolean'
+];
+
 
     public function conferencia()
     {
