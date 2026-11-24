@@ -14,7 +14,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\QrCodeController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\ReporteController;
-use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\API\AttendanceController;
 use App\Http\Controllers\API\PerfilController;
 use App\Http\Controllers\API\NotificationController;
 
