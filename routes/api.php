@@ -75,7 +75,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('admin/reporte/conferencia/{conferencia}', [ReporteController::class, 'getReportePorConferencia']);
     Route::get('admin/reporte/conferencia/{conferencia}/grupo/{grupo}', [ReporteController::class, 'getReportePorAlumnos']);
     Route::get('/conferencia/{id}/qr-salida', [AttendanceController::class, 'generateExitQr']);
-    Route::get('/conferencia/{id}/qr', [App\Http\Controllers\Api\AttendanceController::class, 'generateQr']);
+    Route::get('/conferencia/{id}/qr', [AttendanceController::class, 'generateQr']);
 
     Route::get('/perfil', [PerfilController::class, 'show']);       
     Route::put('/perfil/update', [PerfilController::class, 'update']); 
