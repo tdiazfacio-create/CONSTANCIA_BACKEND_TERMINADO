@@ -10,6 +10,7 @@ return [
         'http://localhost:4200',
         'http://192.168.1.160:4200',
         'https://asistencias-itsal.netlify.app',
+        'https://frontendangularterminado-production.up.railway.app',
     ],
 
     'allowed_origins_patterns' => [],
