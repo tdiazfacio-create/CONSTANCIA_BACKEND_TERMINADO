@@ -2,6 +2,8 @@
 
 return [ 
 
+'frontend_url' => env('FRONTEND_URL'),
+
     'driver' => 'gd',
 
     'error_correction' => 'L',

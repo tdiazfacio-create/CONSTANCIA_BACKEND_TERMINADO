@@ -106,7 +106,7 @@ class AttendanceController extends Controller
 
     public function generateQr($id)
     {
-        $frontendUrl = env('FRONTEND_URL');
+        $frontendUrl = config('qrcode.frontend_url');
 
         if (!$frontendUrl) {
             return response()->json([
@@ -134,7 +134,7 @@ class AttendanceController extends Controller
 
     public function generateExitQr($id)
     {
-        $frontendUrl = env('FRONTEND_URL');
+        $frontendUrl = config('qrcode.frontend_url');
 
         if (!$frontendUrl) {
             return response()->json([
